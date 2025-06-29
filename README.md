@@ -1,150 +1,102 @@
-# Python Terminal RPG Oyunu 🎮
 
-![Python](https://img.shields.io/badge/python-3.6%2B-blue)
+# PyQuest - Terminal RPG Oyunu �⚔️
+
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Issues](https://img.shields.io/github/issues/Memati8383/PyQuest-RPG)
-![Downloads](https://img.shields.io/github/downloads/Memati8383/PyQuest-RPG/total)
+![Version](https://img.shields.io/badge/version-1.0.0-orange)
+![Code Size](https://img.shields.io/github/languages/code-size/Memati8383/PyQuest-RPG)
 
----
+Python ile geliştirilmiş terminal tabanlı interaktif RPG oyunu. Macera dolu bir dünyada kahramanınızı geliştirin, düşmanlarla savaşın ve efsanevi hazineleri keşfedin!
 
-## İçindekiler
+## ✨ Öne Çıkan Özellikler
 
-- [Proje Hakkında](#proje-hakkında)
-- [Özellikler](#özellikler)
-- [Kurulum](#kurulum)
-- [Kullanım](#kullanım)
-- [Oyun Mekanikleri](#oyun-mekanikleri)
-- [Komutlar](#komutlar)
-- [SSS (Sıkça Sorulan Sorular)](#sss-sıkça-sorulan-sorular)
-- [Katkıda Bulunma](#katkıda-bulunma)
-- [Lisans](#lisans)
-- [İletişim](#iletisim)
-- [Teşekkürler](#teşekkürler)
+- 🎨 Renkli terminal arayüzü (Colorama)
+- ⚔️ Sıra tabanlı savaş sistemi
+- 📊 Seviye atlama ve karakter geliştirme
+- 🛒 Dinamik mağaza sistemi
+- 🏆 Görev ve ödül mekanikleri
+- 🧙 Büyü ve özel yetenekler
+- � Hile modu (geliştirici seçenekleri)
 
----
+## 🚀 Kurulum
 
-## Proje Hakkında
-
-Terminal tabanlı, Python 3 ile geliştirilmiş renkli RPG oyunu. Oyuncu ve düşman sınıfları, görevler, envanter, seviye sistemi, mağaza ve hile menüsü içerir.
-
----
-
-## Özellikler
-
-- ✔️ Renkli terminal arayüzü (Colorama)  
-- ✔️ Seviye atlama ve deneyim sistemi  
-- ✔️ Savaş, büyü kullanımı, kaçma  
-- ✔️ Envanter ve eşya yönetimi  
-- ✔️ Mağaza sistemi  
-- ✔️ Görev sistemi  
-- ✔️ Hile modu (aktif edilebilir)  
-- ✔️ Çok sayıda düşman türü ve farklı zorluklar  
-
----
-
-## Kurulum
-
-Python 3.6+ ve `colorama` kütüphanesine ihtiyaç vardır.
+1. Python 3.8 veya üzeri yüklü olduğundan emin olun
+2. Gerekli bağımlılıkları yükleyin:
 
 ```bash
 pip install colorama
+```
 
+3. Oyunu başlatın:
 
----
-
-Kullanım
-
+```bash
 python main.py
+```
 
+## 🎮 Oyun Kontrolleri
 
----
+| Komut       | Açıklama                     |
+|-------------|-----------------------------|
+| `savaş`     | Düşmanlarla mücadele edin    |
+| `envanter`  | Eşyalarınızı yönetin        |
+| `mağaza`    | Ekipman satın alın          |
+| `özellikler`| Karakter istatistikleriniz  |
+| `çıkış`     | Oyundan ayrılın             |
 
-Oyun Mekanikleri
+## 🧩 Oyun Mekanikleri
 
-Mekanik	Açıklama
+### 🏆 Seviye Sistemi
+- Her seviye atlamada güçlenirsiniz
+- Düşmanları yenerek XP kazanın
+- Maksimum seviye: 50
 
-Seviye Sistemi	Deneyim puanı kazanarak seviye atlama
-Envanter	Maksimum 20 eşya tutabilme
-Savaş	Sıra tabanlı savaş, kaçma şansı %33
-Hile Modu	Sınırsız mana ve güçlü silah gibi avantajlar
+### 🎒 Envanter Yönetimi
+- Maksimum 20 eşya taşıyabilme
+- Eşyaları kullan/at seçenekleri
+- Nadir eşyalar özel yetenekler sağlar
 
+### ⚔️ Savaş Sistemi
+- Sıra tabanlı dövüş
+- 3 temel saldırı türü:
+  - Fiziksel
+  - Büyü
+  - Özel yetenek
+- %33 kaçma şansı
 
+## 🛠️ Geliştirici Modu
 
----
+`config.py` dosyasındaki ayarları değiştirerek:
+```python
+CHEATS_ENABLED = True  # Hile menüsünü açar
+DEBUG_MODE = True     # Hata ayıklama mesajları
+```
 
-Komutlar
+## 🤝 Katkıda Bulunma
 
-Komut	Açıklama
+Katkılarınızı bekliyoruz! İşte adımlar:
 
-Savaş	Düşmanlarla mücadele edin
-Envanter	Sahip olduğunuz eşyaları gör
-Mağaza	Eşya satın al
-Hile Menüsü	Oyuncu özelliklerini değiştir
-Çıkış	Oyundan çıkış
+1. Repoyu fork'layın
+2. Yeni branch oluşturun (`git checkout -b feature/awesome-feature`)
+3. Değişikliklerinizi commit'leyin
+4. Branch'inizi push'layın
+5. Pull Request açın
 
+## 📜 Lisans
 
+MIT Lisansı - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
----
+## 📞 İletişim
 
-SSS (Sıkça Sorulan Sorular)
+Memati - [@Memati8383](https://github.com/Memati8383) - memati@example.com
 
-<details>
-  <summary>Oyun açılmıyor, ne yapmalıyım?</summary>
-  Python 3 ve colorama kütüphanesinin kurulu olduğundan emin olun.
-</details><details>
-  <summary>Hile menüsünü nasıl açarım?</summary>
-  `CHEATS` değişkenini `True` yaparak aktif edebilirsiniz.
-</details><details>
-  <summary>Envanter doluysa ne yapmalıyım?</summary>
-  Gereksiz eşyaları atabilir veya kullanabilirsiniz.
-</details>
----
+Proje Linki: [https://github.com/Memati8383/PyQuest-RPG](https://github.com/Memati8383/PyQuest-RPG)
 
-Katkıda Bulunma
+## 🙏 Teşekkürler
 
-1. Projeyi fork'layın
-
-
-2. Yeni özellikler ekleyin veya hataları düzeltin
-
-
-3. Pull request gönderin
-
-
-
-
----
-
-Lisans
-
-MIT Lisansı — özgürce kullanabilirsiniz.
-
-
----
-
-İletişim
-
-E-posta: example@example.com
-
-GitHub: github.com/kullaniciadi
-
-
+- Tüm beta testçiler
+- Python topluluğu
+- Open source katkıcıları
 
 ---
 
-Teşekkürler
-
-Python topluluğu
-
-Colorama geliştiricileri
-
-Beta test kullanıcıları
-
-
-
----
-
-⬆️ Go To TOP
-
----
+> "Bir kod satırı, bin söze bedeldir." - Bilge Programcı

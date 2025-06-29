@@ -41,18 +41,23 @@ python main.py
 
 3. Oyun açıldığında karakter adınızı girerek maceraya başlayabilirsiniz.
 
-
-```
-
 ## 🎮 Oyun Kontrolleri
 
-| Komut       | Açıklama                     |
-|-------------|-----------------------------|
-| `savaş`     | Düşmanlarla mücadele edin    |
-| `envanter`  | Eşyalarınızı yönetin        |
-| `mağaza`    | Ekipman satın alın          |
-| `özellikler`| Karakter istatistikleriniz  |
-| `çıkış`     | Oyundan ayrılın             |
+| Komut        | Açıklama                          |
+|--------------|----------------------------------|
+| `savaş`      | Düşmanlarla mücadeleye girin      |
+| `envanter`   | Eşyalarınızı görüntüleyin ve kullanın |
+| `mağaza`     | Ekipman ve iksir satın alın       |
+| `özellikler` | Karakterinizin istatistiklerini görün |
+| `çıkış`      | Oyundan çıkış yapın               |
+
+### Kontrol İpuçları
+
+- Savaşta seçimler menü üzerinden yapılır; saldırı, kaçma, eşya kullanma veya büyü kullanma seçenekleri vardır.
+- Envanterde eşyaları numara ile seçip kullanabilirsiniz.
+- Mağazada altınınız kadar ürün satın alabilirsiniz.
+- Görev durumunuzu menüden takip ederek ilerlemenizi kontrol edin.
+- Hile modu aktifse ekstra seçenekler ve kolaylıklar kullanabilirsiniz.
 
 ## 🧩 Oyun Mekanikleri
 

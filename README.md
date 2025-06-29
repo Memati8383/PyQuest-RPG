@@ -21,13 +21,8 @@ Python ile geliştirilmiş terminal tabanlı interaktif RPG oyunu. Macera dolu b
 ## 🚀 Kurulum
 
 1. Python 3.8 veya üzeri yüklü olduğundan emin olun
-2. Gerekli bağımlılıkları yükleyin:
 
-```bash
-pip install colorama
-```
-
-3. Oyunu başlatın:
+2. Oyunu başlatın:
 
 ```bash
 python main.py
@@ -62,14 +57,6 @@ python main.py
   - Büyü
   - Özel yetenek
 - %33 kaçma şansı
-
-## 🛠️ Geliştirici Modu
-
-`config.py` dosyasındaki ayarları değiştirerek:
-```python
-CHEATS_ENABLED = True  # Hile menüsünü açar
-DEBUG_MODE = True     # Hata ayıklama mesajları
-```
 
 ## 🤝 Katkıda Bulunma
 

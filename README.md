@@ -4,8 +4,8 @@
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Issues](https://img.shields.io/github/issues/kullaniciadi/projeadi)
-![Downloads](https://img.shields.io/github/downloads/kullaniciadi/projeadi/total)
+![Issues](https://img.shields.io/github/issues/Memati8383/PyQuest-RPG)
+![Downloads](https://img.shields.io/github/downloads/Memati8383/PyQuest-RPG/total)
 
 ---
 

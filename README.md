@@ -28,8 +28,6 @@ Python ile geliştirilmiş terminal tabanlı interaktif RPG oyunu. Macera dolu b
 - 🛡️ **Çeşitli Düşman ve Boss Karakterleri:** Farklı türlerde düşmanlarla karşılaşarak zorlu mücadelelere katılın.
 - 🔄 **Rastgele Görev ve Eşya Sistemi:** Her oyunda farklı görevler ve nadir eşyalarla benzersiz deneyim yaşayın.
 
-Md kodundan colorama sil
-
 ## 🚀 Kurulum
 
 1. Bilgisayarınızda Python 3.8 veya üzeri sürümün yüklü olduğundan emin olun.  
@@ -42,6 +40,8 @@ python main.py
 ```
 
 3. Oyun açıldığında karakter adınızı girerek maceraya başlayabilirsiniz.
+
+
 ```
 
 ## 🎮 Oyun Kontrolleri

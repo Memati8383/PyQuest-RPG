@@ -5,10 +5,16 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![Version](https://img.shields.io/badge/version-1.0.0-orange)
 ![Code Size](https://img.shields.io/github/languages/code-size/Memati8383/PyQuest-RPG)
+![Build Status](https://img.shields.io/github/actions/workflow/status/Memati8383/PyQuest-RPG/python-package.yml?branch=main)
 ![Issues](https://img.shields.io/github/issues/Memati8383/PyQuest-RPG)
 ![Forks](https://img.shields.io/github/forks/Memati8383/PyQuest-RPG)
 ![Stars](https://img.shields.io/github/stars/Memati8383/PyQuest-RPG)
 ![Last Commit](https://img.shields.io/github/last-commit/Memati8383/PyQuest-RPG)
+![Contributors](https://img.shields.io/github/contributors/Memati8383/PyQuest-RPG)
+![Top Language](https://img.shields.io/github/languages/top/Memati8383/PyQuest-RPG)
+![Downloads](https://img.shields.io/github/downloads/Memati8383/PyQuest-RPG/total)
+![Code Quality](https://img.shields.io/codeclimate/maintainability/Memati8383/PyQuest-RPG)
+
 
 Python ile geliştirilmiş terminal tabanlı interaktif RPG oyunu. Macera dolu bir dünyada kahramanınızı geliştirin, düşmanlarla savaşın ve efsanevi hazineleri keşfedin!
 

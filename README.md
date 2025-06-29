@@ -17,13 +17,16 @@ Python ile geliştirilmiş terminal tabanlı interaktif RPG oyunu. Macera dolu b
 
 ## ✨ Öne Çıkan Özellikler
 
-- 🎨 Renkli terminal arayüzü (Colorama)
-- ⚔️ Sıra tabanlı savaş sistemi
-- 📊 Seviye atlama ve karakter geliştirme
-- 🛒 Dinamik mağaza sistemi
-- 🏆 Görev ve ödül mekanikleri
-- 🧙 Büyü ve özel yetenekler
-- � Hile modu (geliştirici seçenekleri)
+- 🎨 **Renkli ve Etkileşimli Terminal Arayüzü:** Colorama kütüphanesi ile görsel olarak zenginleştirilmiş metin tabanlı oyun deneyimi.
+- ⚔️ **Sıra Tabanlı Savaş Sistemi:** Stratejik kararlar alarak düşmanlarla mücadele edin.
+- 📊 **Karakter Geliştirme ve Seviye Atlama:** Deneyim puanları kazanarak karakterinizi güçlendirin, yeni yetenekler edinin.
+- 🛒 **Dinamik Mağaza Sistemi:** Altın kazanıp ekipman ve iksir satın alarak karakterinizi donatın.
+- 🏆 **Görev ve Ödül Mekanikleri:** Çeşitli görevleri tamamlayarak ödüller kazanın ve hikayede ilerleyin.
+- 🧙 **Büyü ve Özel Yetenekler:** Farklı büyüler öğrenip savaşlarda avantaj sağlayın.
+- 💻 **Hile Modu (Geliştirici Seçenekleri):** Oyunu kişiselleştirmek ve test etmek için hile menüsünü kullanın.
+- 🎒 **Envanter Yönetimi:** Maksimum 20 eşya taşıyabilir, eşyaları kullanabilir veya yönetebilirsiniz.
+- 🛡️ **Çeşitli Düşman ve Boss Karakterleri:** Farklı türlerde düşmanlarla karşılaşarak zorlu mücadelelere katılın.
+- 🔄 **Rastgele Görev ve Eşya Sistemi:** Her oyunda farklı görevler ve nadir eşyalarla benzersiz deneyim yaşayın.
 
 ## 🚀 Kurulum
 

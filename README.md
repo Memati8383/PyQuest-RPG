@@ -62,22 +62,36 @@ python main.py
 ## 🧩 Oyun Mekanikleri
 
 ### 🏆 Seviye Sistemi
-- Her seviye atlamada güçlenirsiniz
-- Düşmanları yenerek XP kazanın
-- Maksimum seviye: 50
+- Düşmanları yenerek deneyim puanı (XP) kazanın.
+- Belirli XP miktarına ulaştığınızda seviye atlayarak karakterinizi güçlendirin.
+- Seviye atladıkça maksimum can, mana, saldırı ve savunma değerleriniz artar.
+- Maksimum seviye 50’dir.
 
 ### 🎒 Envanter Yönetimi
-- Maksimum 20 eşya taşıyabilme
-- Eşyaları kullan/at seçenekleri
-- Nadir eşyalar özel yetenekler sağlar
+- En fazla 20 eşya taşıyabilirsiniz.
+- Envanterdeki eşyaları kullanabilir veya atabilirsiniz.
+- Nadir eşyalar karakterinize kalıcı bonuslar ve özel yetenekler kazandırır.
 
 ### ⚔️ Savaş Sistemi
-- Sıra tabanlı dövüş
-- 3 temel saldırı türü:
-  - Fiziksel
-  - Büyü
-  - Özel yetenek
-- %33 kaçma şansı
+- Sıra tabanlı dövüş mekanizması ile stratejik kararlar alın.
+- Üç saldırı türü vardır: Fiziksel saldırı, büyü kullanımı ve özel yetenekler.
+- Savaşta %33 kaçma şansınız bulunur.
+- Düşmanlar farklı türlerde ve zorluk seviyelerinde olup, boss savaşları ekstra zorluk ve ödüller sunar.
+
+### 🛒 Mağaza Sistemi
+- Kazandığınız altınlarla çeşitli ekipman ve iksirler satın alabilirsiniz.
+- Satın aldığınız silahlar karakterinizin saldırı gücünü artırır.
+- İksirler ve büyüler savaşta avantaj sağlar.
+
+### 🏆 Görev ve Ödül Mekanikleri
+- Farklı görevler tamamlayarak XP, altın ve nadir eşyalar kazanabilirsiniz.
+- Görevler, canavar öldürme, özel eşya bulma, seviye atlama gibi çeşitli hedefler içerir.
+- Tamamlanan görevler karakter gelişiminize katkı sağlar.
+
+### 🧙 Büyü ve Özel Yetenekler
+- Seviye atladıkça yeni büyüler öğrenebilirsiniz.
+- Büyüler mana kullanır ve savaşta çeşitli etkiler yaratır (hasar, iyileştirme, savunma artırma vb.).
+- Mana sınırsız modu hile menüsünden açılabilir.
 
 ## 🤝 Katkıda Bulunma
 

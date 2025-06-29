@@ -1,24 +1,30 @@
 
-# Python Terminal RPG Oyunu
+# Python Terminal RPG Oyunu 🎮
+
+![Python](https://img.shields.io/badge/python-3.6%2B-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-green)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Issues](https://img.shields.io/github/issues/kullaniciadi/projeadi)
+![Downloads](https://img.shields.io/github/downloads/kullaniciadi/projeadi/total)
+
+---
 
 ## Proje Hakkında
 
-Python 3 ile geliştirilmiş, terminal tabanlı, renkli ve metin tabanlı RPG (Rol Yapma Oyunu). Oyuncu karakteri ile düşmanlarla savaşır, görevler yapar, envanter yönetir, seviye atlar ve çeşitli eşyalar toplar.
+Terminal tabanlı, Python 3 ile geliştirilmiş renkli RPG oyunu. Oyuncu ve düşman sınıfları, görevler, envanter, seviye sistemi, mağaza ve hile menüsü içerir.
 
 ---
 
 ## Özellikler
 
-- Renkli terminal arayüzü (Colorama ile)
-- Seviye atlama ve deneyim kazanma sistemi
-- Çok sayıda düşman türü ve zorluk seviyeleri
-- Envanter ve eşya yönetimi (silahlar, büyüler, sağlık paketleri)
-- Mağaza sistemi ile eşya satın alma
-- Görev sistemi
-- Hile modu (cheats)
-- Savaş, kaçma ve eşya kullanma seçenekleri
-- Detaylı ve açıklayıcı kullanıcı mesajları
-- Kaydetme/yükleme (ileride eklenebilir)
+- Renkli terminal arayüzü (Colorama)
+- Seviye atlama, deneyim sistemi
+- Savaş, büyü kullanımı, kaçma
+- Envanter yönetimi
+- Mağaza sistemi
+- Görevler
+- Hile modu (aktif edilebilir)
+- Çok sayıda düşman türü ve farklı zorluk seviyeleri
 
 ---
 
@@ -27,7 +33,7 @@ Python 3 ile geliştirilmiş, terminal tabanlı, renkli ve metin tabanlı RPG (R
 - Python 3.6 veya üzeri
 - colorama kütüphanesi
 
-### Kurulum
+Kurulum:
 
 ```bash
 pip install colorama
@@ -37,8 +43,6 @@ pip install colorama
 
 ## Nasıl Çalıştırılır?
 
-Terminal veya komut satırından:
-
 ```bash
 python main.py
 ```
@@ -47,102 +51,79 @@ python main.py
 
 ## Oynanış
 
-- Menüden seçim yaparak savaşabilir, mağazaya girebilir, envanteri görüntüleyebilir veya oyundan çıkabilirsiniz.
-- Savaşta düşmana saldırabilir, büyü kullanabilir veya kaçabilirsiniz.
-- Envantere yeni eşyalar eklenir, bunları kullanabilirsiniz.
-- Seviye atladıkça oyuncu güçlenir.
-- Mağazada altın karşılığı eşya alabilirsiniz.
+- Menüden seçim yaparak savaş, mağaza, envanter ve diğer modüllere erişim.
+- Savaşta düşmana saldırabilir, büyü yapabilir veya kaçabilirsiniz.
+- Envanterde eşyalarınızı yönetebilirsiniz.
+- Mağazada altın ile alışveriş yapabilirsiniz.
 
 ---
 
-## Kullanılan Komutlar / Menü
+## Komutlar
 
-| Komut           | Açıklama                          |
-|-----------------|---------------------------------|
-| Savaş           | Düşmanlarla savaşa gir           |
-| Envanter        | Sahip olduğun eşyaları gör       |
-| Mağaza          | Eşya satın al                    |
-| Hile Menüsü     | Oyun içi özel özellikler (aktif) |
-| Çıkış           | Oyunu kapat                      |
+| Komut        | Açıklama                    |
+|--------------|-----------------------------|
+| Savaş        | Düşmanlarla mücadele edin    |
+| Envanter     | Sahip olduğunuz eşyaları gör |
+| Mağaza       | Eşya satın al                |
+| Hile Menüsü  | Oyuncu özelliklerini değiştir|
+| Çıkış        | Oyundan çıkış                |
 
 ---
 
 ## Oyun Mekanikleri
 
-### Seviye Sistemi
-
-- Deneyim puanı kazanılır.
-- Belirli XP değerlerine ulaşıldığında seviye atlanır.
-- Seviye artınca HP, mana, saldırı gücü gibi değerler yükselir.
-
-### Envanter
-
-- Maksimum 20 eşya tutabilir.
-- Eşyalar farklı türde olabilir: silah, iksir, büyü kitabı vb.
-- Envanterde eşya seçilerek kullanılabilir veya atılabilir.
-
-### Savaş
-
-- Düşmanlarla sıra tabanlı savaş sistemi.
-- Oyuncu saldırabilir, büyü kullanabilir veya kaçabilir.
-- Düşman türüne göre farklı saldırılar olabilir.
-- Kaçma şansı %33.
-
-### Hile Modu
-
-- Aktif edilirse oyuncuya özel güçler verir.
-- Örneğin, sınırsız mana veya çok güçlü silah.
+- **Seviye Sistemi:** XP ile seviye atlayarak yetenekler geliştirilir.  
+- **Envanter:** Maksimum 20 eşya tutabilir.  
+- **Savaş:** Sıra tabanlı, kaçma şansı %33.  
+- **Hileler:** Sınırsız mana, güçlü silahlar gibi özellikler sunar.
 
 ---
 
 ## Sıkça Sorulan Sorular (SSS)
 
-**S: Oyun neden açılmıyor?**  
-C: Python 3 ve colorama yüklü olduğundan emin olun.
-
-**S: Envanter neden dolu gözüküyor?**  
-C: Maksimum 20 eşya taşıyabilirsiniz.
+**S: Oyun açılmıyor, ne yapmalıyım?**  
+C: Python ve colorama kurulumunuzu kontrol edin.
 
 **S: Hile menüsünü nasıl açarım?**  
-C: `CHEATS` değişkenini `True` yapmalısınız.
+C: `CHEATS` değişkenini `True` yaparak aktif edebilirsiniz.
+
+**S: Envanter doluysa ne yapmalıyım?**  
+C: Gereksiz eşyaları atabilir veya kullanabilirsiniz.
 
 ---
 
 ## Katkıda Bulunma
 
-1. Fork yapın  
-2. Yeni özellikler ekleyin veya hata düzeltin  
-3. Pull request gönderin  
-
-Her türlü katkı memnuniyetle karşılanır!
+- Fork yap
+- Değişikliklerini yap
+- Pull request gönder
 
 ---
 
 ## Lisans
 
-MIT Lisansı — dilediğiniz gibi kullanabilir, değiştirebilir ve dağıtabilirsiniz.
+MIT Lisansı — özgürce kullanabilirsiniz.
 
 ---
 
 ## Sürüm Notları
 
-- v1.0 - Temel oyun mekanikleri tamamlandı  
-- v1.1 - Envanter sistemi eklendi  
-- v1.2 - Hile modu aktif edildi  
-- v1.3 - Mağaza ve görev sistemi geliştirildi  
+- v1.0: Temel oyun yapısı tamamlandı  
+- v1.1: Envanter ve görev sistemi eklendi  
+- v1.2: Hile modu aktif edildi
 
 ---
 
 ## İletişim
 
 - E-posta: example@example.com  
-- GitHub: [github.com/kullaniciadi](https://github.com/kullaniciadi)  
+- GitHub: [github.com/kullaniciadi](https://github.com/kullaniciadi)
 
 ---
 
 ## Teşekkürler
 
-- Python topluluğu  
-- Colorama geliştiricileri  
-- Beta test kullanıcıları  
+- Python topluluğuna  
+- Colorama geliştiricilerine  
+- Beta test kullanıcılarına  
 

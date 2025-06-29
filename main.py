@@ -1,18 +1,28 @@
 import random
 import sys
 import time
-from colorama import init, Fore, Style
 
-# Renkleri başlat
-init(autoreset=True)
-
-CHEATS = True
+# ANSI renk kodları
+class Color:
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    BRIGHT = '\033[1m'
+    RESET = '\033[0m'
 
 # Sabitler
 MAX_INVENTORY = 30
 RUN_CHANCE = 0.33
 GOLD_REWARD = (15, 45)
-mana_sinirsiz = False
+
+# Hile kontrol değişkenleri
+HILELER_AKTIF = False
+MANA_SINIRSIZ = False
 
 # Düşman isimleri ve görevler
 ENEMY_NAMES = ["Ork", "Zombi", "Vampir", "Kurt Adam", "Ejderha", "Kara Büyücü", "Goblin", "Trol", "Hayalet"]
@@ -28,11 +38,12 @@ QUESTS = [
 ]
 
 
-def yavas_yaz(metin, renk=Fore.WHITE, delay=0.002):
-    for harf in renk + metin:
+def yavas_yaz(metin, renk=Color.WHITE, delay=0.002):
+    print(renk, end='', flush=True)
+    for harf in metin:
         print(harf, end="", flush=True)
         time.sleep(delay)
-    print(Style.RESET_ALL)
+    print(Color.RESET, end='', flush=True)
 
 # === TEMEL SINIFLAR ===
 
@@ -139,34 +150,34 @@ class Oyuncu(Karakter):
             self.mana = self.max_mana
             self.saldiri += 2
             self.savunma += 1
-            yavas_yaz(f"\n🔺 Seviye atladınız! Yeni seviye: {self.seviye}", Fore.MAGENTA)
+            yavas_yaz(f"\n🔺 Seviye atladınız! Yeni seviye: {self.seviye}", Color.MAGENTA)
 
     def envantere_ekle(self, esya):
         if len(self.envanter) < MAX_INVENTORY:
             self.envanter.append(esya)
             esya_adi = esya.isim.lower()
             self.kazandigi_esyalar.append(esya_adi)
-            yavas_yaz(f"📦 {esya.isim} envantere eklendi.", Fore.CYAN)
+            yavas_yaz(f"📦 {esya.isim} envantere eklendi.", Color.CYAN)
             
             # Excalibur eklendiyse görevi kontrol et
             if esya_adi == "excalibur":
                 self.gorev_durumunu_kontrol_et()
         else:
-            yavas_yaz("⚠️ Envanter dolu!", Fore.YELLOW)
+            yavas_yaz("⚠️ Envanter dolu!", Color.YELLOW)
 
     def envanteri_goster(self):
         if not self.envanter:
-            yavas_yaz("Envanter boş.", Fore.YELLOW)
+            yavas_yaz("Envanter boş.", Color.YELLOW)
             return None
         for i, esya in enumerate(self.envanter):
             print(f"{i + 1}. {esya.isim}")
-        secim = input(Fore.CYAN + "Kullanmak istediğiniz eşya numarası (iptal için boş bırak): " + Style.RESET_ALL)
+        secim = input(Color.CYAN + "Kullanmak istediğiniz eşya numarası (iptal için boş bırak): " + Color.RESET)
         if secim.isdigit():
             index = int(secim) - 1
             if 0 <= index < len(self.envanter):
                 esya = self.envanter.pop(index)
                 esya.kullan(self)
-                
+
     def gorev_durumunu_kontrol_et(self):
         g = self.gorev
         
@@ -198,8 +209,8 @@ class Oyuncu(Karakter):
         g["tamamlandi"] = True
         self.tamamlanan_gorevler.append(g.copy())
         
-        yavas_yaz(f"\n🎉 Görev tamamlandı: {g['hedef']}!", Fore.GREEN)
-        yavas_yaz(f"🎁 Ödüller: {g['odul_xp']} XP, {g['odul_altin']} Altın", Fore.YELLOW)
+        yavas_yaz(f"\n🎉 Görev tamamlandı: {g['hedef']}!", Color.GREEN)
+        yavas_yaz(f"🎁 Ödüller: {g['odul_xp']} XP, {g['odul_altin']} Altın", Color.YELLOW)
         
         self.xp += g["odul_xp"]
         self.altin += g["odul_altin"]
@@ -207,7 +218,7 @@ class Oyuncu(Karakter):
         
         # Yeni görev seç
         self.gorev = self.rastgele_tamamlanmamis_gorev()
-        yavas_yaz(f"📜 Yeni görev: {self.gorev_metni_olustur()}", Fore.CYAN)
+        yavas_yaz(f"📜 Yeni görev: {self.gorev_metni_olustur()}", Color.CYAN)
 
     def gorev_metni_olustur(self):
         g = self.gorev
@@ -253,7 +264,7 @@ class UzunKilic(TemelSilah):
 class Excalibur(TemelSilah):
     def __init__(self):
         super().__init__()
-        self.saldiri = 50 if CHEATS else 15
+        self.saldiri = 15
         self.isim = "Excalibur"
 
 # === EŞYA SINIFLARI ===
@@ -271,7 +282,7 @@ class Iksir(Esya):
 
     def kullan(self, oyuncu):
         oyuncu.hp = min(oyuncu.max_hp, oyuncu.hp + 20)
-        yavas_yaz("❤️ Can 20 puan yenilendi.", Fore.RED)
+        yavas_yaz("❤️ Can 20 puan yenilendi.", Color.RED)
 
 class SuperIksir(Esya):
     def __init__(self):
@@ -279,7 +290,7 @@ class SuperIksir(Esya):
 
     def kullan(self, oyuncu):
         oyuncu.hp = min(oyuncu.max_hp, oyuncu.hp + 50)
-        yavas_yaz("❤️ Can 50 puan yenilendi.", Fore.RED)
+        yavas_yaz("❤️ Can 50 puan yenilendi.", Color.RED)
 
 class ManaIksiri(Esya):
     def __init__(self):
@@ -287,7 +298,7 @@ class ManaIksiri(Esya):
 
     def kullan(self, oyuncu):
         oyuncu.mana = min(oyuncu.max_mana, oyuncu.mana + 20)
-        yavas_yaz("🔷 Mana 20 puan yenilendi.", Fore.BLUE)
+        yavas_yaz("🔷 Mana 20 puan yenilendi.", Color.BLUE)
 
 # === BÜYÜLER ===
 
@@ -318,39 +329,39 @@ BUYULER = [
          "100 hasar verir (Sadece bosslara karşı)", 5)
 ]
 
-def buyu_kullan(oyuncu, dusman, mana_sinirsiz=False):
-    print(Fore.CYAN + Style.BRIGHT + "\n📜-- Büyü Defteri --" + Style.RESET_ALL)
+def buyu_kullan(oyuncu, dusman):
+    print(Color.CYAN + Color.BRIGHT + "\n📜-- Büyü Defteri --" + Color.RESET)
     for i, b in enumerate(BUYULER):
         if oyuncu.seviye >= b.seviye_gereksinimi:
-            print(Fore.YELLOW + f"{i+1}. {b.isim} (Mana: {b.mana_maliyeti}) - " + 
-                  Fore.WHITE + f"{b.aciklama}")
+            print(Color.YELLOW + f"{i+1}. {b.isim} (Mana: {b.mana_maliyeti}) - " + 
+                  Color.WHITE + f"{b.aciklama}")
     
-    secim = input(Fore.CYAN + "\nBüyü numarası (iptal için boş bırak): " + Style.RESET_ALL)
+    secim = input(Color.CYAN + "\nBüyü numarası (iptal için boş bırak): " + Color.RESET)
     if secim.isdigit():
         index = int(secim) - 1
         if 0 <= index < len(BUYULER):
             b = BUYULER[index]
             
             if oyuncu.seviye < b.seviye_gereksinimi:
-                yavas_yaz("Bu büyüyü kullanmak için yeterli seviyede değilsiniz!", Fore.RED)
+                yavas_yaz("Bu büyüyü kullanmak için yeterli seviyede değilsiniz!", Color.RED)
                 return
                 
-            if oyuncu.mana >= b.mana_maliyeti or mana_sinirsiz:
+            if oyuncu.mana >= b.mana_maliyeti or MANA_SINIRSIZ:
                 oyuncu.mana -= b.mana_maliyeti
                 b.etkisi(oyuncu, dusman)
                 
                 if b.isim == "Kalkan":
-                    yavas_yaz(f"🛡️ Savunmanız 3 tur boyunca +5 arttı!", Fore.BLUE)
+                    yavas_yaz(f"🛡️ Savunmanız 3 tur boyunca +5 arttı!", Color.BLUE)
                 elif b.isim == "Zehir Bulutu":
-                    yavas_yaz(f"☠️ {dusman.isim} zehirlendi!", Fore.GREEN)
+                    yavas_yaz(f"☠️ {dusman.isim} zehirlendi!", Color.GREEN)
                 elif b.isim == "Hayat Çalma":
-                    yavas_yaz(f"💔 {dusman.isim}'den 20 can çaldınız!", Fore.RED)
+                    yavas_yaz(f"💔 {dusman.isim}'den 20 can çaldınız!", Color.RED)
                 else:
-                    yavas_yaz(f"✨ {b.isim} büyüsü uygulandı!", Fore.MAGENTA)
+                    yavas_yaz(f"✨ {b.isim} büyüsü uygulandı!", Color.MAGENTA)
             else:
-                yavas_yaz("Yeterli mana yok!", Fore.RED)
+                yavas_yaz("Yeterli mana yok!", Color.RED)
         else:
-            yavas_yaz("Geçersiz büyü numarası!", Fore.RED)
+            yavas_yaz("Geçersiz büyü numarası!", Color.RED)
 
 # === GELİŞMİŞ DÜŞMAN SINIFLARI ===
 
@@ -378,34 +389,34 @@ class Düsman(Karakter):
         # Donma kontrolü
         if self.donmus > 0:
             self.donmus -= 1
-            yavas_yaz(f"❄️ {self.isim} donmuş ve saldıramıyor!", Fore.BLUE)
+            yavas_yaz(f"❄️ {self.isim} donmuş ve saldıramıyor!", Color.BLUE)
             return
             
         if self.tur == "iyilesen" and self.hp < self.max_hp // 2 and random.random() < 0.3:
             iyilesme = random.randint(15, 30)
             self.hp = min(self.max_hp, self.hp + iyilesme)
-            yavas_yaz(f"{self.isim} kendini {iyilesme} can iyileştirdi!", Fore.GREEN)
+            yavas_yaz(f"{self.isim} kendini {iyilesme} can iyileştirdi!", Color.GREEN)
             return
         elif self.tur == "zehirli" and random.random() < 0.3:
             oyuncu.zehirli = True
-            yavas_yaz(f"☠️ {self.isim} sizi zehirledi!", Fore.GREEN)
+            yavas_yaz(f"☠️ {self.isim} sizi zehirledi!", Color.GREEN)
         elif self.tur == "buyucu" and random.random() < 0.4:
             zarar = random.randint(15, 30)
             oyuncu.hp -= zarar
-            yavas_yaz(f"🔮 {self.isim} size {zarar} hasarlı büyü saldırısı yaptı!", Fore.MAGENTA)
+            yavas_yaz(f"🔮 {self.isim} size {zarar} hasarlı büyü saldırısı yaptı!", Color.MAGENTA)
             return
         elif self.tur == "kalkanli" and random.random() < 0.2:
             self.savunma += 3
-            yavas_yaz(f"🛡️ {self.isim} savunmasını güçlendirdi!", Fore.BLUE)
+            yavas_yaz(f"🛡️ {self.isim} savunmasını güçlendirdi!", Color.BLUE)
             
         zarar = oyuncu.hasar_al(self.saldiri)
-        yavas_yaz(f"⚔️ {self.isim} size {zarar} hasar verdi!", Fore.RED)
+        yavas_yaz(f"⚔️ {self.isim} size {zarar} hasar verdi!", Color.RED)
 
 
 # === MAĞAZA SİSTEMİ ===
 
 def magaza(oyuncu):
-    print(Fore.CYAN + "\n🛒 -- Mağaza -- (Altın: 💰" + Fore.YELLOW + f" {oyuncu.altin} " + Fore.CYAN + ")" + Style.RESET_ALL)
+    print(Color.CYAN + "\n🛒 -- Mağaza -- (Altın: 💰" + Color.YELLOW + f" {oyuncu.altin} " + Color.CYAN + ")" + Color.RESET)
     urunler = [
         ("İksir", 20, Iksir()),
         ("Süper İksir", 40, SuperIksir()),
@@ -416,7 +427,7 @@ def magaza(oyuncu):
     ]
     for i, (isim, fiyat, _) in enumerate(urunler):
         print(f"{i+1}. {isim} - {fiyat} altın")
-    secim = input(Fore.CYAN + "Satın almak istediğiniz ürün numarası (iptal için boş bırak): " + Style.RESET_ALL)
+    secim = input(Color.CYAN + "Satın almak istediğiniz ürün numarası (iptal için boş bırak): " + Color.RESET)
     if secim.isdigit():
         index = int(secim) - 1
         if 0 <= index < len(urunler):
@@ -433,7 +444,7 @@ def magaza(oyuncu):
                 else:
                     oyuncu.envantere_ekle(nesne)
             else:
-                yavas_yaz("Yetersiz altın.", Fore.RED)
+                yavas_yaz("Yetersiz altın.", Color.RED)
                 
 # === SAVAŞ SİSTEMİ ===
 
@@ -441,29 +452,29 @@ def savas(oyuncu, boss=False):
     dusman = Düsman(boss)
     
     if boss:
-        yavas_yaz(f"\n💀 {Fore.RED}{Style.BRIGHT}BOSS SAVAŞI: {dusman.isim} {Style.RESET_ALL}" +
-                 f"{Fore.WHITE}(Seviye {dusman.seviye}, HP: {dusman.hp})", Fore.RED)
+        yavas_yaz(f"\n💀 {Color.RED}{Color.BRIGHT}BOSS SAVAŞI: {dusman.isim} {Color.RESET}" +
+                 f"{Color.WHITE}(Seviye {dusman.seviye}, HP: {dusman.hp})", Color.RED)
     else:
-        yavas_yaz(f"\n⚔️ {Fore.RED}{dusman.isim} {Fore.WHITE}(Seviye {dusman.seviye}, Tür: {dusman.tur}) ile karşılaştınız!", Fore.MAGENTA)
+        yavas_yaz(f"\n⚔️ {Color.RED}{dusman.isim} {Color.WHITE}(Seviye {dusman.seviye}, Tür: {dusman.tur}) ile karşılaştınız!", Color.MAGENTA)
 
     while oyuncu.hp > 0 and dusman.hp > 0:
-        print(Fore.CYAN + f"\n🎖️ {oyuncu.isim} | HP: {oyuncu.hp}/{oyuncu.max_hp} | Mana: {oyuncu.mana}/{oyuncu.max_mana}" + Style.RESET_ALL)
-        print(Fore.RED + f"💀 {dusman.isim} | HP: {dusman.hp}/{dusman.max_hp}" + Style.RESET_ALL)
+        print(Color.CYAN + f"\n🎖️ {oyuncu.isim} | HP: {oyuncu.hp}/{oyuncu.max_hp} | Mana: {oyuncu.mana}/{oyuncu.max_mana}" + Color.RESET)
+        print(Color.RED + f"💀 {dusman.isim} | HP: {dusman.hp}/{dusman.max_hp}" + Color.RESET)
         print("\n1. Saldır")
         print("2. Kaç")
         print("3. Eşya Kullan")
         print("4. Büyü Kullan")
 
-        secim = input(Fore.CYAN + "Seçiminiz: " + Style.RESET_ALL)
+        secim = input(Color.CYAN + "Seçiminiz: " + Color.RESET)
         if secim == "1":
             hasar = dusman.hasar_al(oyuncu.saldir())
-            yavas_yaz(f"{dusman.isim}'e {hasar} hasar verdiniz.", Fore.RED)
+            yavas_yaz(f"{dusman.isim}'e {hasar} hasar verdiniz.", Color.RED)
         elif secim == "2":
             if random.random() < RUN_CHANCE:
-                yavas_yaz("🏃 Başarıyla kaçtınız!", Fore.GREEN)
+                yavas_yaz("🏃 Başarıyla kaçtınız!", Color.GREEN)
                 return
             else:
-                yavas_yaz("Kaçamadınız!", Fore.YELLOW)
+                yavas_yaz("Kaçamadınız!", Color.YELLOW)
                 # Düşmanın saldırması için döngünün devam etmesi gerekir
                 # Buraya continue eklemiyoruz ki düşman saldırısı gerçekleşsin
         elif secim == "3":
@@ -480,14 +491,14 @@ def savas(oyuncu, boss=False):
             # Donma kontrolü
             if dusman.donmus > 0:
                 dusman.donmus -= 1
-                yavas_yaz(f"❄️ {dusman.isim} donmuş ve saldıramıyor!", Fore.BLUE)
+                yavas_yaz(f"❄️ {dusman.isim} donmuş ve saldıramıyor!", Color.BLUE)
             else:
                 if dusman.hp <= dusman.max_hp // 4 and not dusman.boss:
-                    yavas_yaz(f"⚠️ {dusman.isim} çaresiz durumda ve daha agresif saldırıyor!", Fore.RED)
+                    yavas_yaz(f"⚠️ {dusman.isim} çaresiz durumda ve daha agresif saldırıyor!", Color.RED)
                     dusman.saldiri += 3
                     
                 if dusman.boss and dusman.hp <= dusman.max_hp // 2:
-                    yavas_yaz(f"💢 {dusman.isim} öfkelendi! Saldırı gücü arttı!", Fore.RED)
+                    yavas_yaz(f"💢 {dusman.isim} öfkelendi! Saldırı gücü arttı!", Color.RED)
                     dusman.saldiri += 5
                     
                 dusman.davran(oyuncu)
@@ -497,18 +508,18 @@ def savas(oyuncu, boss=False):
             yavas_yaz("☠️ Zehir etkisi! -3 HP")
 
     if oyuncu.hp <= 0:
-        yavas_yaz("\n💀 Öldünüz. Oyun bitti.", Fore.RED)
+        yavas_yaz("\n💀 Öldünüz. Oyun bitti.", Color.RED)
         sys.exit()
 
    
 
-    yavas_yaz(f"\n🎉 {dusman.isim} yok edildi! Tecrübe ve altın kazandınız.", Fore.GREEN)
+    yavas_yaz(f"\n🎉 {dusman.isim} yok edildi! Tecrübe ve altın kazandınız.", Color.GREEN)
     
     # Boss öldürme istatistiği
     if dusman.boss:
         oyuncu.oldurulen_bosslar += 1
-        yavas_yaz(f"\n🎉 {Fore.YELLOW}BOSS YENDİNİZ! {Style.RESET_ALL}" + 
-                 f"{Fore.GREEN}Büyük ödüller kazandınız!", Fore.YELLOW)
+        yavas_yaz(f"\n🎉 {Color.YELLOW}BOSS YENDİNİZ! {Color.RESET}" + 
+                 f"{Color.GREEN}Büyük ödüller kazandınız!", Color.YELLOW)
         oyuncu.deneyim_ekle(100)
         kazanc = random.randint(100, 200)
     else:
@@ -517,90 +528,98 @@ def savas(oyuncu, boss=False):
         kazanc = random.randint(*GOLD_REWARD)
         
     oyuncu.altin += kazanc
-    yavas_yaz(f"💰 {kazanc} altın kazandınız.", Fore.YELLOW)
-    
+    yavas_yaz(f"💰 {kazanc} altın kazandınız.", Color.YELLOW)
+   
     # Nadir eşya şansı
     if random.random() < (0.3 if boss else 0.1):
-        nadir_esyalar = [Excalibur(), BuyuKitabi(), EfsaneviZirh()]
+        nadir_esyalar = [Excalibur(), Iksir(), SuperIksir()]
         yeni_esya = random.choice(nadir_esyalar)
         oyuncu.envantere_ekle(yeni_esya)
-        yavas_yaz(f"✨ {Fore.MAGENTA}NADİR EŞYA BULDUNUZ: {yeni_esya.isim}{Style.RESET_ALL}", Fore.MAGENTA)
+        yavas_yaz(f"✨ {Color.MAGENTA}NADİR EŞYA BULDUNUZ: {yeni_esya.isim}{Color.RESET}", Color.MAGENTA)
 
     oyuncu.gorev_durumunu_kontrol_et()
 
 def hile_menusu(oyuncu):
-    global mana_sinirsiz
+    global MANA_SINIRSIZ, HILELER_AKTIF
     while True:
-        print(Fore.CYAN + Style.BRIGHT + "\n💻 Hile Menüsü" + Style.RESET_ALL)
-        print(Fore.YELLOW + "1. Canı Tam Doldur" + Style.RESET_ALL)
-        print(Fore.YELLOW + "2. Mana'yı Tam Doldur" + Style.RESET_ALL)
-        print(Fore.YELLOW + "3. Altın Ekle (Miktar Seç)" + Style.RESET_ALL)
-        print(Fore.YELLOW + "4. Seviye Atlama (Miktar Seç)" + Style.RESET_ALL)
-        print(Fore.YELLOW + "5. Excalibur Ver" + Style.RESET_ALL)
-        print(Fore.YELLOW + "6. Mana Sınırsız Modu Aç/Kapa" + Style.RESET_ALL)
-        print(Fore.YELLOW + "7. Envanteri Temizle" + Style.RESET_ALL)
-        print(Fore.YELLOW + "8. Negatif Durumları Temizle" + Style.RESET_ALL)
-        print(Fore.YELLOW + "9. Çıkış" + Style.RESET_ALL)
-        secim = input(Fore.CYAN + "Seçiminiz: " + Style.RESET_ALL)
+        print(Color.CYAN + Color.BRIGHT + "\n💻 Hile Menüsü" + Color.RESET)
+        print(Color.YELLOW + "1. Canı Tam Doldur" + Color.RESET)
+        print(Color.YELLOW + "2. Mana'yı Tam Doldur" + Color.RESET)
+        print(Color.YELLOW + "3. Altın Ekle (Miktar Seç)" + Color.RESET)
+        print(Color.YELLOW + "4. Seviye Atlama (Miktar Seç)" + Color.RESET)
+        print(Color.YELLOW + "5. Excalibur Ver" + Color.RESET)
+        print(Color.YELLOW + "6. Mana Sınırsız Modu Aç/Kapa" + Color.RESET)
+        print(Color.YELLOW + "7. Envanteri Temizle" + Color.RESET)
+        print(Color.YELLOW + "8. Negatif Durumları Temizle" + Color.RESET)
+        print(Color.YELLOW + "9. Çıkış" + Color.RESET)
+        secim = input(Color.CYAN + "Seçiminiz: " + Color.RESET)
 
         if secim == "1":
             oyuncu.hp = oyuncu.max_hp
-            yavas_yaz("Canınız tam olarak dolduruldu.", Fore.GREEN)
+            yavas_yaz("Canınız tam olarak dolduruldu.", Color.GREEN)
         elif secim == "2":
             oyuncu.mana = oyuncu.max_mana
-            yavas_yaz("Mananız tam olarak dolduruldu.", Fore.BLUE)
+            yavas_yaz("Mananız tam olarak dolduruldu.", Color.BLUE)
         elif secim == "3":
             miktar = input("Eklenecek altın miktarı: ")
             if miktar.isdigit():
                 oyuncu.altin += int(miktar)
-                yavas_yaz(f"Altın {miktar} adet eklendi.", Fore.GREEN)
+                yavas_yaz(f"Altın {miktar} adet eklendi.", Color.GREEN)
             else:
-                yavas_yaz("Geçersiz miktar.", Fore.RED)
+                yavas_yaz("Geçersiz miktar.", Color.RED)
         elif secim == "4":
             miktar = input("Eklenecek seviye sayısı: ")
             if miktar.isdigit():
                 for _ in range(int(miktar)):
                     oyuncu.deneyim_ekle(oyuncu.seviye * 50)
-                yavas_yaz(f"{miktar} seviye atlandı.", Fore.MAGENTA)
+                yavas_yaz(f"{miktar} seviye atlandı.", Color.MAGENTA)
             else:
-                yavas_yaz("Geçersiz sayı.", Fore.RED)
+                yavas_yaz("Geçersiz sayı.", Color.RED)
         elif secim == "5":
             oyuncu.silah = Excalibur()
             oyuncu.kazandigi_esyalar.append("excalibur")
-            yavas_yaz("Excalibur size verildi!", Fore.CYAN)
+            yavas_yaz("Excalibur size verildi!", Color.CYAN)
             oyuncu.gorev_durumunu_kontrol_et()  # Görevi kontrol et
         elif secim == "6":
-            mana_sinirsiz = not mana_sinirsiz
-            durum = "açıldı" if mana_sinirsiz else "kapatıldı"
-            yavas_yaz(f"Mana sınırsız modu {durum}.", Fore.CYAN)
+            MANA_SINIRSIZ = not MANA_SINIRSIZ
+            durum = "açıldı" if MANA_SINIRSIZ else "kapatıldı"
+            yavas_yaz(f"Mana sınırsız modu {durum}.", Color.CYAN)
         elif secim == "7":
             oyuncu.envanter.clear()
-            yavas_yaz("Envanter temizlendi.", Fore.YELLOW)
+            yavas_yaz("Envanter temizlendi.", Color.YELLOW)
         elif secim == "8":
             oyuncu.zehirli = False
-            yavas_yaz("Tüm negatif durumlar temizlendi.", Fore.GREEN)
+            yavas_yaz("Tüm negatif durumlar temizlendi.", Color.GREEN)
         elif secim == "9":
             break
         else:
-            yavas_yaz("Geçersiz giriş.", Fore.RED)
+            yavas_yaz("Geçersiz giriş.", Color.RED)
 
 # === ANA OYUN DÖNGÜSÜ ===
 
 def oyun():
-    print(Fore.MAGENTA + Style.BRIGHT + "=== 🧝‍♂️ METİN TABANLI RPG OYUNU ===" + Style.RESET_ALL)
-    isim = input(Fore.CYAN + "Karakter adınızı girin: " + Style.RESET_ALL)
+    global HILELER_AKTIF, MANA_SINIRSIZ
+    
+    print(Color.MAGENTA + Color.BRIGHT + "=== 🧝‍♂️ METİN TABANLI RPG OYUNU ===" + Color.RESET)
+    isim = input(Color.CYAN + "Karakter adınızı girin: " + Color.RESET)
     oyuncu = Oyuncu(isim)
-    yavas_yaz(Fore.CYAN + Style.BRIGHT + f"Hoş geldin, {oyuncu.isim}!" + Style.RESET_ALL)
-    yavas_yaz(f"📜 Aktif görev: {oyuncu.gorev_metni_olustur()}", Fore.CYAN)
+    yavas_yaz(Color.CYAN + Color.BRIGHT + f"Hoş geldin, {oyuncu.isim}!" + Color.RESET)
+    yavas_yaz(f"📜 Aktif görev: {oyuncu.gorev_metni_olustur()}", Color.CYAN)
 
     while True:
-        print(Fore.CYAN + Style.BRIGHT + "\n🔹 Menü 🔹" + Style.RESET_ALL)
-        print(Fore.YELLOW + "1. Savaşa Gir" + Style.RESET_ALL)
-        print(Fore.YELLOW + "2. Envanteri Görüntüle" + Style.RESET_ALL)
-        print(Fore.YELLOW + "3. Mağazaya Git" + Style.RESET_ALL)
-        print(Fore.YELLOW + "4. Görev Durumu" + Style.RESET_ALL)
-        print(Fore.YELLOW + "5. Çıkış" + Style.RESET_ALL)
-        print(Fore.RED + "6. Hile Menüsü" + Style.RESET_ALL)
+        print(Color.CYAN + Color.BRIGHT + "\n🔹 Menü 🔹" + Color.RESET)
+        print(Color.YELLOW + "1. Savaşa Gir" + Color.RESET)
+        print(Color.YELLOW + "2. Envanteri Görüntüle" + Color.RESET)
+        print(Color.YELLOW + "3. Mağazaya Git" + Color.RESET)
+        print(Color.YELLOW + "4. Görev Durumu" + Color.RESET)
+        print(Color.YELLOW + "5. Çıkış" + Color.RESET)
+        
+        # Hile durumuna göre menü seçenekleri
+        if HILELER_AKTIF:
+            print(Color.RED + "6. Hile Menüsü" + Color.RESET)
+            print(Color.YELLOW + f"7. Hile Modu: {'AÇIK ✅' if HILELER_AKTIF else 'KAPALI ❌'}" + Color.RESET)
+        else:
+            print(Color.YELLOW + f"6. Hile Modu: {'AÇIK ✅' if HILELER_AKTIF else 'KAPALI ❌'}" + Color.RESET)
 
         secim = input("Seçiminiz: ")
         if secim == "1":
@@ -614,20 +633,25 @@ def oyun():
         elif secim == "3":
             magaza(oyuncu)
         elif secim == "4":
-            print(Fore.GREEN + f"\n📜 Aktif Görev: {oyuncu.gorev_metni_olustur()}")
+            print(Color.GREEN + f"\n📜 Aktif Görev: {oyuncu.gorev_metni_olustur()}")
             
             # Tamamlanan görevleri göster
             if oyuncu.tamamlanan_gorevler:
-                print(Fore.MAGENTA + "\n🏆 Tamamlanan Görevler:")
+                print(Color.MAGENTA + "\n🏆 Tamamlanan Görevler:")
                 for i, gorev in enumerate(oyuncu.tamamlanan_gorevler):
                     print(f"{i+1}. {gorev['hedef']} - {gorev['odul_xp']} XP, {gorev['odul_altin']} Altın")
         elif secim == "5":
-            yavas_yaz("Çıkılıyor... Görüşmek üzere!", Fore.CYAN)
+            yavas_yaz("Çıkılıyor... Görüşmek üzere!", Color.CYAN)
             break
-        elif secim == "6":
+        elif secim == "6" and HILELER_AKTIF:
             hile_menusu(oyuncu)
+        elif secim == "6" or secim == "7":
+            HILELER_AKTIF = not HILELER_AKTIF
+            durum = "açıldı" if HILELER_AKTIF else "kapatıldı"
+            MANA_SINIRSIZ = False  # Hile modu kapatılınca mana sınırsız da kapat
+            yavas_yaz(f"Hile modu {durum}.", Color.CYAN)
         else:
-            yavas_yaz("Geçersiz giriş.", Fore.RED)
+            yavas_yaz("Geçersiz giriş.", Color.RED)
 
 # === OYUNU BAŞLAT ===
 if __name__ == "__main__":

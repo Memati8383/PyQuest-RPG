@@ -24,17 +24,37 @@ GOLD_REWARD = (15, 45)
 HILELER_AKTIF = False
 MANA_SINIRSIZ = False
 
-# Düşman isimleri ve görevler
-ENEMY_NAMES = ["Ork", "Zombi", "Vampir", "Kurt Adam", "Ejderha", "Kara Büyücü", "Goblin", "Trol", "Hayalet"]
-BOSS_NAMES = ["Kral Ork", "Lich", "Kızıl Ejderha", "Karanlık Lordu"]
+# Düşman isimleri ve görevler - EXPANDED
+ENEMY_NAMES = ["Ork", "Zombi", "Vampir", "Kurt Adam", "Ejderha", "Kara Büyücü", 
+               "Goblin", "Trol", "Hayalet", "Dev Örümcek", "Minotor", "Su Canavarı", 
+               "Lamia", "Grifon", "Kiklop", "Harpia", "Kemik Yürüyücü", "Gargoyle",
+               "Kara Şövalye", "Kurt Sürüsü", "Yeraltı Yaratığı", "İblis", "Şeytan Köpeği",
+               "Yara Bandı", "Taş Golem", "Ateş Elementali", "Buz Cadısı"]
 
+# Boss isimleri - EXPANDED
+BOSS_NAMES = ["Kral Ork", "Lich", "Kızıl Ejderha", "Karanlık Lordu", "Ölüm Meleği", 
+              "Titan", "Kara Ejder", "Cehennem Lordu", "Buz Kraliçesi", "Ateş Tanrısı",
+              "Kaos Şövalyesi", "Ebedi Canavar", "Gölge Avcısı", "Yılan Tanrı", "Korku Prensi"]
+
+# Görevler - EXPANDED
 QUESTS = [
     {"hedef": "canavar", "adet": 5, "odul_xp": 80, "odul_altin": 80, "tamamlandi": False, "zorluk": 1},
     {"hedef": "boss", "adet": 1, "odul_xp": 200, "odul_altin": 200, "tamamlandi": False, "zorluk": 3},
     {"hedef": "excalibur", "adet": 1, "odul_xp": 150, "odul_altin": 150, "tamamlandi": False, "zorluk": 2},
     {"hedef": "iksir", "adet": 3, "odul_xp": 60, "odul_altin": 60, "tamamlandi": False, "zorluk": 1},
     {"hedef": "buyu_ogren", "adet": 2, "odul_xp": 100, "odul_altin": 100, "tamamlandi": False, "zorluk": 2},
-    {"hedef": "seviye_atla", "adet": 3, "odul_xp": 120, "odul_altin": 120, "tamamlandi": False, "zorluk": 2}
+    {"hedef": "seviye_atla", "adet": 3, "odul_xp": 120, "odul_altin": 120, "tamamlandi": False, "zorluk": 2},
+    # Yeni görevler
+    {"hedef": "kalkanli_dusman", "adet": 3, "odul_xp": 90, "odul_altin": 90, "tamamlandi": False, "zorluk": 2},
+    {"hedef": "buyucu_dusman", "adet": 4, "odul_xp": 110, "odul_altin": 110, "tamamlandi": False, "zorluk": 2},
+    {"hedef": "altin_kazan", "adet": 500, "odul_xp": 150, "odul_altin": 200, "tamamlandi": False, "zorluk": 2},
+    {"hedef": "dev_ork", "adet": 1, "odul_xp": 250, "odul_altin": 250, "tamamlandi": False, "zorluk": 3},
+    {"hedef": "elemental", "adet": 2, "odul_xp": 180, "odul_altin": 180, "tamamlandi": False, "zorluk": 3},
+    {"hedef": "golem", "adet": 2, "odul_xp": 170, "odul_altin": 170, "tamamlandi": False, "zorluk": 3},
+    {"hedef": "kral_magara", "adet": 1, "odul_xp": 300, "odul_altin": 300, "tamamlandi": False, "zorluk": 4},
+    {"hedef": "kutsal_kilic", "adet": 1, "odul_xp": 200, "odul_altin": 200, "tamamlandi": False, "zorluk": 3},
+    {"hedef": "efsanevi_zirh", "adet": 1, "odul_xp": 180, "odul_altin": 180, "tamamlandi": False, "zorluk": 3},
+    {"hedef": "buyu_kitabi", "adet": 1, "odul_xp": 220, "odul_altin": 220, "tamamlandi": False, "zorluk": 3}
 ]
 
 
@@ -83,6 +103,13 @@ class Oyuncu(Karakter):
         self.oldurulen_bosslar = 0
         self.ogrenilen_buyuler = 1  # Başlangıçta 1 büyü biliniyor
         self.gorev = self.rastgele_tamamlanmamis_gorev()
+        
+        # Yeni görev istatistikleri
+        self.oldurulen_kalkanli = 0
+        self.oldurulen_buyucu = 0
+        self.oldurulen_dev_ork = 0
+        self.oldurulen_elemental = 0
+        self.oldurulen_golem = 0
 
     def gorev_metni_olustur(self):
         g = self.gorev
@@ -100,6 +127,31 @@ class Oyuncu(Karakter):
             return f"{g['adet']} yeni büyü öğren ({self.ogrenilen_buyuler-1}/{g['adet']})"
         elif g["hedef"] == "seviye_atla":
             return f"{g['adet']} seviye atla (Şu an: {self.seviye})"
+        # Yeni görev metinleri
+        elif g["hedef"] == "kalkanli_dusman":
+            return f"{g['adet']} kalkanlı düşman öldür ({self.oldurulen_kalkanli}/{g['adet']})"
+        elif g["hedef"] == "buyucu_dusman":
+            return f"{g['adet']} büyücü düşman öldür ({self.oldurulen_buyucu}/{g['adet']})"
+        elif g["hedef"] == "altin_kazan":
+            return f"{g['adet']} altın kazan ({self.altin}/{g['adet']})"
+        elif g["hedef"] == "dev_ork":
+            return f"{g['adet']} Dev Ork öldür ({self.oldurulen_dev_ork}/{g['adet']})"
+        elif g["hedef"] == "elemental":
+            return f"{g['adet']} Elemental öldür ({self.oldurulen_elemental}/{g['adet']})"
+        elif g["hedef"] == "golem":
+            return f"{g['adet']} Golem öldür ({self.oldurulen_golem}/{g['adet']})"
+        elif g["hedef"] == "kral_magara":
+            durum = "✅" if "kral_magara" in self.kazandigi_esyalar else "❌"
+            return f"Mağara Kralını yen {durum}"
+        elif g["hedef"] == "kutsal_kilic":
+            durum = "✅" if "kutsal_kilic" in self.kazandigi_esyalar else "❌"
+            return f"Kutsal Kılıcı bul {durum}"
+        elif g["hedef"] == "efsanevi_zirh":
+            durum = "✅" if "efsanevi_zirh" in self.kazandigi_esyalar else "❌"
+            return f"Efsanevi Zırhı bul {durum}"
+        elif g["hedef"] == "buyu_kitabi":
+            durum = "✅" if "buyu_kitabi" in self.kazandigi_esyalar else "❌"
+            return f"Kayıp Büyü Kitabını bul {durum}"
         return "Bilinmeyen görev"
 
     def gorev_durumunu_kontrol_et(self):
@@ -121,6 +173,27 @@ class Oyuncu(Karakter):
             tamamlandi = self.ogrenilen_buyuler-1 >= g["adet"]
         elif g["hedef"] == "seviye_atla":
             tamamlandi = self.seviye >= g["adet"] + 1  # Başlangıç seviyesi 1 olduğu için
+        # Yeni görev kontrolleri
+        elif g["hedef"] == "kalkanli_dusman":
+            tamamlandi = self.oldurulen_kalkanli >= g["adet"]
+        elif g["hedef"] == "buyucu_dusman":
+            tamamlandi = self.oldurulen_buyucu >= g["adet"]
+        elif g["hedef"] == "altin_kazan":
+            tamamlandi = self.altin >= g["adet"]
+        elif g["hedef"] == "dev_ork":
+            tamamlandi = self.oldurulen_dev_ork >= g["adet"]
+        elif g["hedef"] == "elemental":
+            tamamlandi = self.oldurulen_elemental >= g["adet"]
+        elif g["hedef"] == "golem":
+            tamamlandi = self.oldurulen_golem >= g["adet"]
+        elif g["hedef"] == "kral_magara":
+            tamamlandi = "kral_magara" in self.kazandigi_esyalar
+        elif g["hedef"] == "kutsal_kilic":
+            tamamlandi = "kutsal_kilic" in self.kazandigi_esyalar
+        elif g["hedef"] == "efsanevi_zirh":
+            tamamlandi = "efsanevi_zirh" in self.kazandigi_esyalar
+        elif g["hedef"] == "buyu_kitabi":
+            tamamlandi = "buyu_kitabi" in self.kazandigi_esyalar
             
         if tamamlandi:
             self.gorev_tamamla()
@@ -159,8 +232,8 @@ class Oyuncu(Karakter):
             self.kazandigi_esyalar.append(esya_adi)
             yavas_yaz(f"📦 {esya.isim} envantere eklendi.", Color.CYAN)
             
-            # Excalibur eklendiyse görevi kontrol et
-            if esya_adi == "excalibur":
+            # Özel eşyalar eklendiyse görevi kontrol et
+            if esya_adi in ["excalibur", "kutsal kılıç", "efsanevi zırh", "kayıp büyü kitabı"]:
                 self.gorev_durumunu_kontrol_et()
         else:
             yavas_yaz("⚠️ Envanter dolu!", Color.YELLOW)
@@ -178,32 +251,6 @@ class Oyuncu(Karakter):
                 esya = self.envanter.pop(index)
                 esya.kullan(self)
 
-    def gorev_durumunu_kontrol_et(self):
-        g = self.gorev
-        
-        # Görev zaten tamamlanmışsa tekrar kontrol etme
-        if g["tamamlandi"]:
-            return
-            
-        tamamlandi = False
-        if g["hedef"] == "canavar":
-            if self.oldurulen_canavarlar >= g["adet"]:
-            	tamamlandi = self.oldurulen_canavarlar >= g["adet"]
-        elif g["hedef"] == "boss":
-        	tamamlandi = self.oldurulen_bosslar >= g["adet"]
-        elif g["hedef"] == "iksir":
-        	adet = sum(1 for esya in self.envanter if esya.isim in ["İksir", "Süper İksir"])
-        	tamamlandi = adet >= g["adet"]
-        elif g["hedef"] == "buyu_ogren":
-        	tamamlandi = self.ogrenilen_buyuler-1 >= g["adet"]
-        elif g["hedef"] == "seviye_atla":
-        	tamamlandi = self.seviye >= g["adet"] + 1  # Başlangıç seviyesi 1 olduğu için
-        elif g["hedef"] == "excalibur":
-            tamamlandi = "excalibur" in self.kazandigi_esyalar
-            
-        if tamamlandi:
-            self.gorev_tamamla()
-            
     def gorev_tamamla(self):
         g = self.gorev
         g["tamamlandi"] = True
@@ -219,22 +266,6 @@ class Oyuncu(Karakter):
         # Yeni görev seç
         self.gorev = self.rastgele_tamamlanmamis_gorev()
         yavas_yaz(f"📜 Yeni görev: {self.gorev_metni_olustur()}", Color.CYAN)
-
-    def gorev_metni_olustur(self):
-        g = self.gorev
-        if g["hedef"] == "canavar":
-            return f"{g['adet']} canavar öldür ({self.oldurulen_canavarlar}/{g['adet']})"
-        elif g["hedef"] == "excalibur":
-            durum = "✅" if "excalibur" in self.kazandigi_esyalar else "❌"
-            return f"Excalibur kılıcını bul {durum}"
-        elif g["hedef"] == "iksir":
-        	adet = sum(1 for esya in self.envanter if esya.isim in ["İksir", "Süper İksir"])
-        	return f"{g['adet']} iksir topla ({adet}/{g['adet']})"
-        elif g["hedef"] == "buyu_ogren":
-        	return f"{g['adet']} yeni büyü öğren ({self.ogrenilen_buyuler-1}/{g['adet']})"
-        elif g["hedef"] == "seviye_atla":
-        	return f"{g['adet']} seviye atla (Şu an: {self.seviye})"
-        return "Bilinmeyen görev"
 
 # === SİLAH SINIFLARI ===
 
@@ -266,6 +297,19 @@ class Excalibur(TemelSilah):
         super().__init__()
         self.saldiri = 15
         self.isim = "Excalibur"
+
+# Yeni silahlar
+class KutsalKilic(TemelSilah):
+    def __init__(self):
+        super().__init__()
+        self.saldiri = 18
+        self.isim = "Kutsal Kılıç"
+
+class EjderhaKilic(TemelSilah):
+    def __init__(self):
+        super().__init__()
+        self.saldiri = 22
+        self.isim = "Ejderha Kılıcı"
 
 # === EŞYA SINIFLARI ===
 
@@ -300,6 +344,33 @@ class ManaIksiri(Esya):
         oyuncu.mana = min(oyuncu.max_mana, oyuncu.mana + 20)
         yavas_yaz("🔷 Mana 20 puan yenilendi.", Color.BLUE)
 
+# Yeni eşyalar
+class EfsaneviZirh(Esya):
+    def __init__(self):
+        super().__init__("Efsanevi Zırh")
+        
+    def kullan(self, oyuncu):
+        oyuncu.savunma += 10
+        yavas_yaz("🛡️ Savunmanız +10 arttı! (Kalıcı)", Color.BLUE)
+
+class BuyuKitabi(Esya):
+    def __init__(self):
+        super().__init__("Kayıp Büyü Kitabı")
+        
+    def kullan(self, oyuncu):
+        oyuncu.ogrenilen_buyuler += 2
+        yavas_yaz("📖 2 yeni büyü öğrendiniz!", Color.MAGENTA)
+        oyuncu.gorev_durumunu_kontrol_et()
+
+class KralMagaraTaci(Esya):
+    def __init__(self):
+        super().__init__("Mağara Kralı Tacı")
+        
+    def kullan(self, oyuncu):
+        oyuncu.max_hp += 50
+        oyuncu.hp += 50
+        yavas_yaz("👑 Maksimum canınız +50 arttı!", Color.RED)
+
 # === BÜYÜLER ===
 
 class Buyu:
@@ -326,7 +397,14 @@ BUYULER = [
     Buyu("Hayat Çalma", 30, lambda o, d: (d.hasar_al(40), setattr(o, 'hp', min(o.max_hp, o.hp + 20))), 
          "40 hasar verir ve 20 can çalar", 4),
     Buyu("Meteor Yağmuru", 50, lambda o, d: d.hasar_al(100), 
-         "100 hasar verir (Sadece bosslara karşı)", 5)
+         "100 hasar verir (Sadece bosslara karşı)", 5),
+    # Yeni büyüler
+    Buyu("Kutsal Kalkan", 40, lambda o, d: (setattr(o, 'savunma', o.savunma + 10), setattr(o, 'hp', min(o.max_hp, o.hp + 25))), 
+         "Savunma +10 ve 25 can iyileştirir", 4),
+    Buyu("Zaman Donması", 60, lambda o, d: setattr(d, 'donmus', 2), 
+         "Düşmanı 2 tur donuk bırakır", 5),
+    Buyu("Kutsal Işın", 45, lambda o, d: d.hasar_al(75), 
+         "75 hasar verir (Özellikle karanlık yaratıklara etkili)", 4)
 ]
 
 def buyu_kullan(oyuncu, dusman):
@@ -356,6 +434,10 @@ def buyu_kullan(oyuncu, dusman):
                     yavas_yaz(f"☠️ {dusman.isim} zehirlendi!", Color.GREEN)
                 elif b.isim == "Hayat Çalma":
                     yavas_yaz(f"💔 {dusman.isim}'den 20 can çaldınız!", Color.RED)
+                elif b.isim == "Kutsal Kalkan":
+                    yavas_yaz(f"✨ Savunmanız +10 arttı ve 25 can iyileştirdiniz!", Color.MAGENTA)
+                elif b.isim == "Zaman Donması":
+                    yavas_yaz(f"⏳ {dusman.isim} 2 tur boyunca dondu!", Color.BLUE)
                 else:
                     yavas_yaz(f"✨ {b.isim} büyüsü uygulandı!", Color.MAGENTA)
             else:
@@ -369,21 +451,36 @@ class Düsman(Karakter):
     def __init__(self, boss=False):
         if boss:
             isim = random.choice(BOSS_NAMES)
-            seviye = random.randint(5, 8)
-            hp = 150 + seviye * 30
-            saldiri = 15 + seviye * 3
-            savunma = 10 + seviye
+            seviye = random.randint(5, 10)
+            hp = 180 + seviye * 35
+            saldiri = 20 + seviye * 4
+            savunma = 12 + seviye
         else:
             isim = random.choice(ENEMY_NAMES)
-            seviye = random.randint(1, 5)
-            hp = 50 + seviye * 20
-            saldiri = 8 + seviye * 2
-            savunma = 5 + seviye
+            seviye = random.randint(1, 7)
+            hp = 60 + seviye * 25
+            saldiri = 10 + seviye * 3
+            savunma = 7 + seviye
 
         super().__init__(isim, hp, seviye, saldiri, savunma)
         self.tur = random.choice(["normal", "iyilesen", "zehirli", "buyucu", "kalkanli"])
         self.boss = boss
         self.donmus = 0
+        
+        # Özel düşman türleri
+        if "Dev" in isim:
+            self.tur = "dev"
+            self.hp += 50
+            self.saldiri += 5
+        elif "Elemental" in isim:
+            self.tur = "elemental"
+            self.hp += 30
+            self.saldiri += 8
+        elif "Golem" in isim:
+            self.tur = "golem"
+            self.hp += 80
+            self.savunma += 10
+            self.saldiri -= 3
         
     def davran(self, oyuncu):
         # Donma kontrolü
@@ -392,6 +489,25 @@ class Düsman(Karakter):
             yavas_yaz(f"❄️ {self.isim} donmuş ve saldıramıyor!", Color.BLUE)
             return
             
+        # Özel yetenekler
+        if self.tur == "dev" and random.random() < 0.4:
+            zarar = self.saldiri * 1.5
+            oyuncu.hp -= zarar
+            yavas_yaz(f"💥 {self.isim} size {int(zarar)} hasarlı dev saldırısı yaptı!", Color.RED)
+            return
+        elif self.tur == "elemental":
+            if "Ateş" in self.isim:
+                if random.random() < 0.5:
+                    oyuncu.hp -= 25
+                    yavas_yaz(f"🔥 {self.isim} size 25 hasarlı ateş saldırısı yaptı!", Color.RED)
+                    return
+            elif "Buz" in self.isim:
+                if random.random() < 0.4:
+                    oyuncu.zehirli = True
+                    yavas_yaz(f"❄️ {self.isim} sizi dondu! Savunma düştü.", Color.BLUE)
+                    oyuncu.savunma = max(0, oyuncu.savunma - 3)
+                    return
+                    
         if self.tur == "iyilesen" and self.hp < self.max_hp // 2 and random.random() < 0.3:
             iyilesme = random.randint(15, 30)
             self.hp = min(self.max_hp, self.hp + iyilesme)
@@ -424,6 +540,11 @@ def magaza(oyuncu):
         ("Kısa Kılıç", 35, KisaKilic()),
         ("Uzun Kılıç", 60, UzunKilic()),
         ("Excalibur", 120, Excalibur()),
+        # Yeni ürünler
+        ("Kutsal Kılıç", 150, KutsalKilic()),
+        ("Ejderha Kılıcı", 200, EjderhaKilic()),
+        ("Efsanevi Zırh", 180, EfsaneviZirh()),
+        ("Kayıp Büyü Kitabı", 220, BuyuKitabi()),
     ]
     for i, (isim, fiyat, _) in enumerate(urunler):
         print(f"{i+1}. {isim} - {fiyat} altın")
@@ -438,8 +559,8 @@ def magaza(oyuncu):
                     oyuncu.silah = nesne
                     yavas_yaz(f"{isim} kuşanıldı!")
                     
-                    # Excalibur alındıysa görevi kontrol et
-                    if nesne.isim.lower() == "excalibur":
+                    # Özel silahlar alındıysa görevi kontrol et
+                    if nesne.isim.lower() in ["excalibur", "kutsal kılıç"]:
                         oyuncu.gorev_durumunu_kontrol_et()
                 else:
                     oyuncu.envantere_ekle(nesne)
@@ -511,31 +632,56 @@ def savas(oyuncu, boss=False):
         yavas_yaz("\n💀 Öldünüz. Oyun bitti.", Color.RED)
         sys.exit()
 
-   
+    # İstatistik güncelleme
+    if dusman.boss:
+        oyuncu.oldurulen_bosslar += 1
+    else:
+        oyuncu.oldurulen_canavarlar += 1
+        
+    # Özel düşman istatistikleri
+    if "Dev" in dusman.isim:
+        oyuncu.oldurulen_dev_ork += 1
+    elif "Elemental" in dusman.isim:
+        oyuncu.oldurulen_elemental += 1
+    elif "Golem" in dusman.isim:
+        oyuncu.oldurulen_golem += 1
+    elif dusman.tur == "kalkanli":
+        oyuncu.oldurulen_kalkanli += 1
+    elif dusman.tur == "buyucu":
+        oyuncu.oldurulen_buyucu += 1
 
     yavas_yaz(f"\n🎉 {dusman.isim} yok edildi! Tecrübe ve altın kazandınız.", Color.GREEN)
     
     # Boss öldürme istatistiği
     if dusman.boss:
-        oyuncu.oldurulen_bosslar += 1
         yavas_yaz(f"\n🎉 {Color.YELLOW}BOSS YENDİNİZ! {Color.RESET}" + 
                  f"{Color.GREEN}Büyük ödüller kazandınız!", Color.YELLOW)
-        oyuncu.deneyim_ekle(100)
-        kazanc = random.randint(100, 200)
+        oyuncu.deneyim_ekle(120)
+        kazanc = random.randint(150, 300)
     else:
-        oyuncu.oldurulen_canavarlar += 1
-        oyuncu.deneyim_ekle(25)
+        oyuncu.deneyim_ekle(30)
         kazanc = random.randint(*GOLD_REWARD)
         
     oyuncu.altin += kazanc
     yavas_yaz(f"💰 {kazanc} altın kazandınız.", Color.YELLOW)
    
     # Nadir eşya şansı
-    if random.random() < (0.3 if boss else 0.1):
-        nadir_esyalar = [Excalibur(), Iksir(), SuperIksir()]
+    nadir_esya_sansi = 0.4 if boss else 0.15
+    if random.random() < nadir_esya_sansi:
+        nadir_esyalar = [Excalibur(), Iksir(), SuperIksir(), KutsalKilic(), EfsaneviZirh(), BuyuKitabi()]
+        # Boss özel ödülleri
+        if boss:
+            nadir_esyalar.append(KralMagaraTaci())
+            nadir_esyalar.append(EjderhaKilic())
+            
         yeni_esya = random.choice(nadir_esyalar)
         oyuncu.envantere_ekle(yeni_esya)
         yavas_yaz(f"✨ {Color.MAGENTA}NADİR EŞYA BULDUNUZ: {yeni_esya.isim}{Color.RESET}", Color.MAGENTA)
+        
+        # Mağara Kralı tacı alındıysa görevi tamamla
+        if yeni_esya.isim == "Mağara Kralı Tacı":
+            oyuncu.kazandigi_esyalar.append("kral_magara")
+            oyuncu.gorev_durumunu_kontrol_et()
 
     oyuncu.gorev_durumunu_kontrol_et()
 
@@ -624,7 +770,8 @@ def oyun():
         secim = input("Seçiminiz: ")
         if secim == "1":
             # Normal savaş veya boss savaşı şansı
-            if random.random() < 0.1 and oyuncu.seviye >= 3:
+            boss_sansi = 0.1 + (oyuncu.seviye * 0.02)
+            if random.random() < boss_sansi and oyuncu.seviye >= 3:
                 savas(oyuncu, boss=True)
             else:
                 savas(oyuncu)
